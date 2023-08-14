@@ -1,26 +1,14 @@
 <?php
-
-// Incluid Database Connection Hear
 include('function.php');
 
-// Connection Page Class Ar Object Create hear;
-$obConnect = new crudApp();
-
-// From Data Submited from Btn name click 
+// 
+$obCreate = new apptest();
+// condition chack and 
 if(isset($_POST['add_info'])){
-  $return_msg = $obConnect->add_data($_POST);
+  $rtn_msg = $obCreate->app_data($_POST);
 }
 
-// CONNECTION SUCCESSFULLY END HRAR======================================
-
-
-
-
-
-
-
-
-
+$dataRecive = $obCreate -> display_data();
 
 
 
@@ -41,29 +29,24 @@ if(isset($_POST['add_info'])){
   <body>
     
 
-  <?php 
-      if(isset($_POST['$return_msg'])) { echo $return_msg; }
-    ?>
+
 
 <div class="container shadow  my-5 bg-body rounded">
   <h2 class="text-danger">From For Student </h2>
-
   <form action=" "  method="post" enctype="multipart/form-data">
-
-
-
-    
-      <label for="name" class="form-label">Enter Name: </label>
-      <input type="text" class="form-control"  name="name">
-    
-      <label for="number" class="form-label">Number</label>
-      <input type="number"  class="form-control" name="phone">
-    
-      <label for="email" class="form-label">Email </label>
-      <input type="email"  class="form-control" name="email">
-    
-      <label class="form-check-label">Please Enter Img </label>
-      <input type="file"  class="form-control"  name="img">
+  <?php  if(isset($rtn_msg)){
+    echo "<h5 class = 'text-center text-danger'> $rtn_msg </h5>"; } ?>
+    <label for="name" class="form-label">Enter Name: </label>
+    <input type="text" class="form-control"  name="name">
+  
+    <label for="number" class="form-label">Number</label>
+    <input type="number"  class="form-control" name="phone">
+  
+    <label for="email" class="form-label">Email </label>
+    <input type="email"  class="form-control" name="email">
+  
+    <label class="form-check-label">Please Enter Img </label>
+    <input type="file"  class="form-control"  name="img">
 
     <button type="submit" class=" btn-warning form-control my-3" name="add_info">Add Information </button>
   </form>
@@ -83,22 +66,25 @@ if(isset($_POST['add_info'])){
         <th scope="col">Action</th>
       </tr>
     </thead>
+
     <tbody>
+      <?php while ($datShow = mysqli_fetch_assoc($dataRecive)) { ?>
       <tr>
-        <th scope="row">1</th>
-        <td>reduan</td>
-        <td>0551</td>
-        <td>red@gmail.com</td>
+        <th scope="row"> <?php echo $datShow['id'];  ?> </th>
+        <td>   <?php echo $datShow['name'];  ?></td>
+        <td>   <?php echo $datShow['phone'];  ?></td>
+        <td>  <?php echo $datShow['email'];  ?> </td>
         <td>
-          <img class="card-img-top" src="upload/<?php if (isset($img_name)) {
-              echo $img_name; } ?> " alt="Card image" style="width:100%"> 
+          <img class="card-img-top" src="upload/<?php echo $datShow['img'];  ?> "alt="Card image" style="height: 50px; width :100%"> 
         </td>
-        
-        <td>Edite</td>
+        <td>
+          <a href="edite.php?status=edit&&id=<?php echo $datShow['id'];?>" class="btn btn-warning">Edite</a>
+          <a href="" class="btn btn-danger">Delete</a>
+        </td>
       </tr>
-
-
+      <?php } ?>
     </tbody>
+
   </table>
 </div>
 

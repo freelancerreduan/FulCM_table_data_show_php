@@ -1,63 +1,63 @@
 <?php
 
-// Create a Simple Class
- class crudApp{
-    
-    // private data Connection header with $conn;
+class apptest{
+    // This funtion for DATABASE Connection. 
     private $conn;
-
-    // publice funtion __construct() for localhost connection information hear for database
     public function __construct()
     {
-        $dbhost = 'localhost';
-        $dbuser = 'root';
-        $dbpass = "";
-        $dbname = 'app_php';
+        $dbhost ='localhost';
+        $dbuser ='root';
+        $dbpass ="";
+        $dbname ='app_php';
 
-        // $this->conn added all variable hear
-        $this->conn= mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
-
-        // Condition Chak for connection right ase kina ? jodi nah thake tahole Error asbe..
+        $this->conn = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
         if(!$this->conn){
-            die("Connection Faild!");
+            die ("<h4> Connection Faild!! </h4>");
         }
     }
 
-    // this funtion for variable a Store All Data ,, ait input fild a theke name ar sahajje dhorte hobe....( add_data )ati funtion name hear.. AND $data ati dara ARGUMENT Pass korte hoi,,
-    public function add_data($data){
+    // This funtion for Data Recive in variable ... 
+    public function app_data($data){
         $name = $data['name'];
         $phone = $data['phone'];
         $email = $data['email'];
-        
-        // img file upload hear ...
+        // img upload hear 
         $img = $_FILES['img']['name'];
         $tmp_name =$_FILES['img']['tmp_name'];
-        
-
-        // Query For INSERT DATA from Database
-        $query = "INSERT INTO student(name,phone,email,img) VALUE ('$name',$phone,'$email','$img')";
-
-        // Condition Chack hear for connection Database....
-        if(mysqli_query($this->conn, $query)){
+        $query = "INSERT INTO user(name,phone,email,img) VALUE ('$name','$phone','$email','$img')";
+        if(mysqli_query($this->conn , $query)){
             move_uploaded_file($tmp_name , "upload/".$img);
-            return "Connection Succesfully";
+            return ('Data Sent Successfully');
         }
     }
 
-    public function displayData(){
-        $query = "SELECT * FROM student";
+    // Form Data Select kore Display korar jonne ai function use kora hoiyese...
+    public function display_data(){
+        $query = "SELECT * FROM user";
         if(mysqli_query($this->conn , $query)){
             $returndata = mysqli_query($this->conn , $query);
             return $returndata;
         }
     }
- }
-// CONNECTION SUCCESSFULLY END HRAR======================================
 
 
 
 
 
+
+    // This Function for Edite Data 
+    public function display_data_by_id($id){
+        $query = "SELECT * FROM user WHERE id='$id' ";
+        if(mysqli_query($this->conn , $query)){
+            $returndata = mysqli_query($this->conn , $query);
+            $returndata = mysqli_fetch_assoc($returndata);
+            return $returndata;
+        }
+    }
+
+
+
+}
 
 
 
@@ -72,30 +72,3 @@
 
 
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
