@@ -12,6 +12,18 @@ $dataRecive = $obCreate -> display_data();
 
 
 
+
+
+
+
+// DELET korar jonne function
+if(isset($_GET['status'])){
+  if($_GET['status']='delete'){
+    $id = $_GET['id'];
+    $rtnData = $obCreate-> delete_data($id);
+  }
+}
+
 ?>
 
 <!doctype html>
@@ -34,8 +46,7 @@ $dataRecive = $obCreate -> display_data();
 <div class="container shadow  my-5 bg-body rounded">
   <h2 class="text-danger">From For Student </h2>
   <form action=" "  method="post" enctype="multipart/form-data">
-  <?php  if(isset($rtn_msg)){
-    echo "<h5 class = 'text-center text-danger'> $rtn_msg </h5>"; } ?>
+  <?php  if(isset($rtnData)){ echo "<h5 class = 'text-center text-danger'> $rtnData  </h5>"; } ?>
     <label for="name" class="form-label">Enter Name: </label>
     <input type="text" class="form-control"  name="name">
   
@@ -55,6 +66,8 @@ $dataRecive = $obCreate -> display_data();
 
 
 <div class="container container shadow my-5 bg-body rounded">
+  <h4 class="text-center text-danger">
+    <?php if(isset($rtnData)){echo $rtnData;} ?></h4>
   <table class="table">
     <thead>
       <tr>
@@ -79,7 +92,7 @@ $dataRecive = $obCreate -> display_data();
         </td>
         <td>
           <a href="edite.php?status=edit&&id=<?php echo $datShow['id'];?>" class="btn btn-warning">Edite</a>
-          <a href="" class="btn btn-danger">Delete</a>
+          <a href="?status=delet&&id=<?php echo $datShow['id'];?> " class="btn btn-danger">Delete</a>
         </td>
       </tr>
       <?php } ?>

@@ -50,14 +50,26 @@
             }
         }
 
-        public function displayDataEdit($id){
-            $query = "SELECT * FROM student WHERE id = id";
-            if(mysqli_query($this->conn, $query)){
-                $rtn_msg = mysqli_query($this->conn, $query);
-                $rtn_msg = mysqli_fetch_assoc($rtn_msg);
+
+
+        public function display_data($id){
+            $query = "SELECT * FROM student WHERE id = $id";
+            if(mysqli_query($this->conn , $query)){
+                $rtn = mysqli_query($this->conn , $query);
+                $rtn_msg = mysqli_fetch_assoc($rtn);
                 return $rtn_msg;
             }
         }
+
+
+
+
+
+     
+
+
+
+
     }
 
 ?>

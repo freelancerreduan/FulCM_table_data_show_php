@@ -56,7 +56,37 @@ class apptest{
     }
 
 
+    public function update_data($data){
+        $name = $data['u_name'];
+        $number = $data['u_phone'];
+        $email = $data['u_email'];
+        $idno = $data['idno'];
+        // img upload code
+        $img = $_FILES['u_img']['name'];
+        $tmp_name =$_FILES['u_img']['tmp_name'];
+        
+        $query = "UPDATE user SET name ='$name' , phone = $number, email ='$email', img='$img'  WHERE id= $idno";
 
+        if(mysqli_query($this->conn, $query)){
+            move_uploaded_file($tmp_name , "upload/".$img);
+            return "Information Updated Successfully";
+        }
+    }
+
+
+    public function delete_data($id){
+        $query ="SELECT * FROM user WHERE id = $id";
+        $user_data = mysqli_query($this->conn , $query);
+        $user_info =mysqli_fetch_assoc($user_data);
+        $user_img_info = $user_info['img'];
+
+        // this query for deleted data
+        $query = "DELETE FROM user WHERE id=$id";
+        if(mysqli_query($this->conn , $query)){
+            unlink('upload/'.$user_img_info);
+            return "Deleted Successfully";
+        }
+    }
 }
 
 
